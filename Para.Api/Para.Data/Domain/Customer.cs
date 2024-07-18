@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using Para.Base.Entity;
 
 namespace Para.Data.Domain;
@@ -12,9 +13,7 @@ public class Customer : BaseEntity
     public string Email { get; set; }
     public int CustomerNumber { get; set; }
     public DateTime DateOfBirth { get; set; }
-    
-    
-    public virtual CustomerDetail CustomerDetail { get; set; }
-    public virtual List<CustomerAddress> CustomerAddresses { get; set; }
-    public virtual List<CustomerPhone> CustomerPhones { get; set; }
+    public virtual CustomerDetail? CustomerDetail { get; set; }
+    public virtual List<CustomerAddress>? CustomerAddresses { get; set; }
+    public virtual List<CustomerPhone>? CustomerPhones { get; set; }
 }

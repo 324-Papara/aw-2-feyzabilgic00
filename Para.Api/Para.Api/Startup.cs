@@ -1,8 +1,11 @@
 using System.Text.Json.Serialization;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Para.Bussiness.Services;
 using Para.Data.Context;
 using Para.Data.UnitOfWork;
+using Para.Data.Validators;
 
 namespace Para.Api;
 
@@ -25,6 +28,9 @@ public class Startup
             options.JsonSerializerOptions.WriteIndented = true;
             options.JsonSerializerOptions.PropertyNamingPolicy = null;
         });
+
+        services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CustomerValidator>());
+
         services.AddSwaggerGen(c =>
         {
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "Para.Api", Version = "v1" });
@@ -37,6 +43,7 @@ public class Startup
         services.AddDbContext<ParaPostgreDbContext>(options => options.UseNpgsql(connectionStringPostgre));
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<ICustomerService, CustomerService>();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -8,7 +8,7 @@ public class UnitOfWork : IUnitOfWork, IDisposable
 {
     private readonly ParaSqlDbContext dbContext;
     
-    public IGenericRepository<Customer> CustomerRepository { get; }
+    public IGenericRepository<Customer> Customers { get; }
     public IGenericRepository<CustomerDetail> CustomerDetailRepository { get; }
     public IGenericRepository<CustomerAddress> CustomerAddressRepository { get; }
     public IGenericRepository<CustomerPhone> CustomerPhoneRepository { get; }
@@ -19,7 +19,7 @@ public class UnitOfWork : IUnitOfWork, IDisposable
     {
         this.dbContext = dbContext;
 
-        CustomerRepository = new GenericRepository<Customer>(this.dbContext);
+        Customers = new GenericRepository<Customer>(this.dbContext);
         CustomerDetailRepository = new GenericRepository<CustomerDetail>(this.dbContext);
         CustomerAddressRepository = new GenericRepository<CustomerAddress>(this.dbContext);
         CustomerPhoneRepository = new GenericRepository<CustomerPhone>(this.dbContext);

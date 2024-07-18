@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Para.Bussiness.Services;
 using Para.Data.Context;
 using Para.Data.Domain;
+using Para.Data.UnitOfWork;
 
 namespace Para.Api.Controllers
 {
@@ -11,10 +13,11 @@ namespace Para.Api.Controllers
     public class CustomersController : ControllerBase
     {
         private readonly ParaSqlDbContext dbContext;
-
-        public CustomersController(ParaSqlDbContext dbContext)
+        private readonly ICustomerService _customerService;
+        public CustomersController(ParaSqlDbContext dbContext, ICustomerService customerService)
         {
             this.dbContext = dbContext;
+            _customerService = customerService;
         }
 
 
@@ -53,6 +56,12 @@ namespace Para.Api.Controllers
             var entity = await dbContext.Set<Customer>().FirstOrDefaultAsync(x => x.Id == customerId);
             dbContext.Set<Customer>().Remove(entity);
             await dbContext.SaveChangesAsync();
+        }
+        [HttpGet("GetCustomersByName")]
+        public async Task<List<Customer>> GetCustomersByNameAsync(string name)
+        {
+
+            return await _customerService.GetCustomersByNameAsync(name);
         }
     }
 }

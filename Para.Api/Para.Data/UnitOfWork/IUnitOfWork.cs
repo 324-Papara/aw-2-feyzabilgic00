@@ -7,7 +7,7 @@ public interface IUnitOfWork
 {
     Task Complete();
     
-    IGenericRepository<Customer> CustomerRepository { get; }
+    IGenericRepository<Customer> Customers{ get; }
     IGenericRepository<CustomerDetail> CustomerDetailRepository { get; }
     IGenericRepository<CustomerAddress> CustomerAddressRepository { get; }
     IGenericRepository<CustomerPhone> CustomerPhoneRepository { get; }
